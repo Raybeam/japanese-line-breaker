@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        max-width: 600px;
+        margin: auto;
+      }
+
+      textarea {
+        display: block;
+        width: 100%;
+        margin-bottom: 15px;
+        resize: none;
+      }
+
+      #result {
+        margin-top: 20px;
+      }
+
+      pre {
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Japanese line breaker</h1>
+      <p>
+        Example: 常に最新、最高のモバイル。Androidを開発した同じチームから。
+      </p>
+      <form>
+        <textarea name="mikanjs-input" rows="5" id="mikanjs-input"></textarea>
+        <button type="button">Convert</button>
+      </form>
+      <pre><code id="result"></code></pre>
+    </div>
+    <script src="./mikan.js"></script>
+    <script>
+      (function IIFE() {
+        const input = document.getElementById("mikanjs-input");
+        const button = document.querySelector("button");
+        const result = document.getElementById("result");
+
+        button.addEventListener("click", () => {
+          const resultHTML = Mikan(input.value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(
+              /&gt;&lt;/g,
+              `&gt;
+&lt;`
+            );
+          result.innerHTML = resultHTML;
+        });
+      })();
+    </script>
+  </body>
+</html>
